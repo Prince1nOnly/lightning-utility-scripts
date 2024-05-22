@@ -21,4 +21,4 @@ sudo apt-get install -f
 rm powershell_7.4.2-1.deb_amd64.deb
 
 # Start PowerShell Preview
-pwsh-lts
+# pwsh
