@@ -37,7 +37,7 @@ check_status "Setting executable permissions"
 echo "This script will configure your Ubuntu Docker instance by performing the following tasks:"
 echo "1. Change the user password."
 echo "2. Update package repositories and packages."
-echo "3. Attempt a release upgrade of the current Ubuntu version."
+echo "3. Prompt for a release upgrade of the current Ubuntu version."
 echo "4. Prompt for and install Linuxbrew if desired."
 echo "5. Append sourcing of 'implement.sh' to .profile."
 echo "6. Append sourcing of .profile to .zshrc."
@@ -62,14 +62,19 @@ sudo apt update && sudo apt upgrade -y
 check_status "Package update"
 echo "Package repositories and packages updated successfully."
 
-# Attempt to do a release upgrade
-echo "Checking and installing required dependencies for release upgrade..."
-sudo apt install -y update-manager-core
-check_status "Dependency installation for release upgrade"
-echo "Starting release upgrade..."
-sudo do-release-upgrade
-check_status "Release upgrade"
-echo "Release upgrade completed successfully."
+# Prompt for a release upgrade
+read -p "Do you want to upgrade to the latest Ubuntu LTS release? (yes/no): " upgrade_ubuntu
+if [[ $upgrade_ubuntu == "yes" ]]; then
+  echo "Checking and installing required dependencies for release upgrade..."
+  sudo apt install -y update-manager-core
+  check_status "Dependency installation for release upgrade"
+  echo "Starting release upgrade..."
+  sudo do-release-upgrade
+  check_status "Release upgrade"
+  echo "Release upgrade completed successfully."
+else
+  echo "Skipping Ubuntu release upgrade."
+fi
 
 # Prompt for and install Linuxbrew
 read -p "Do you want to install Linuxbrew? (yes/no): " install_brew
