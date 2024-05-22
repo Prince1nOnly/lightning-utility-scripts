@@ -23,7 +23,7 @@ backup_password() {
 
   # Backup the password
   echo "Backing up password to storage..."
-  cp /etc/shadow "$BACKUP_FILE"
+  source ./save_password.sh
   check_status "Password backup"
   echo "Password successfully backed up."
 }
