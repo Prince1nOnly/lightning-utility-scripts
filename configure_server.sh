@@ -112,15 +112,7 @@ if get_yes_no_response "${YELLOW}Do you want to install Linuxbrew?${NC}"; then
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   check_status "Linuxbrew installation"
   echo -e "${GREEN}Linuxbrew installed successfully.${NC}"
-  if [ -f ./setup_linuxbrew.sh ]; then
-    echo -e "\n${GREEN}Persisting Linuxbrew to storage...${NC}"
-    source ./setup_linuxbrew.sh
-    check_status "Linuxbrew setup"
-    echo -e "${GREEN}Linuxbrew setup completed successfully.${NC}"
-  else
-    echo -e "${RED}setup_linuxbrew.sh script not found.${NC}"
-    exit 1
-  fi
+  ##########################################
 else
   echo -e "${YELLOW}Skipping Linuxbrew installation.${NC}"
 fi
