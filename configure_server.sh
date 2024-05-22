@@ -108,7 +108,7 @@ check_status "Package update"
 echo -e "${GREEN}Package repositories and packages updated successfully.${NC}"
 
 # Prompt for and install Linuxbrew
-echo -e "\n${YELLOW}Do you want to install Linuxbrew?${NC}"
+if ! $YES_TO_ALL; then echo -e "\n${YELLOW}Do you want to install Linuxbrew?${NC}"; fi
 if get_yes_no_response; then
   echo "Installing Linuxbrew..."
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -128,7 +128,7 @@ else
 fi
 
 # Prompt for a release upgrade
-echo -e "\n${YELLOW}Do you want to upgrade to the latest Ubuntu LTS release?${NC}"
+if ! $YES_TO_ALL; then echo -e "\n${YELLOW}Do you want to upgrade to the latest Ubuntu LTS release?${NC}"; fi
 if get_yes_no_response; then
   echo -e "\n${GREEN}Checking and installing required dependencies for release upgrade...${NC}"
   sudo apt install -y update-manager-core
@@ -179,6 +179,6 @@ check_status "Sourcing .zshrc"
 # Display the password message
 echo -e "\n${YELLOW}IMPORTANT:${NC}"
 echo -e "${RED}The set password for your current studio instance is 'welcome'.${NC}"
-echo -e "${GREEN}Use command, 'sudo passwd $(whoami)', to change password to a much stronger one for improved studio security.${NC}"
+echo -e "${GREEN}Use the command, 'sudo passwd $(whoami)', to change password to a much stronger one for improved studio security.${NC}"
 
 echo -e "\n${GREEN}Server configuration completed successfully.${NC}"
