@@ -88,7 +88,8 @@ echo "8. Install essential packages."
 
 # Wait for the user to be ready if not using -y
 if ! $YES_TO_ALL; then
-  read -p $'\n'"${YELLOW}Press Enter to start the configuration process...${NC}"
+  echo -e "\n${YELLOW}Press any key to start the configuration process...${NC}"
+  read -rsn 1 -p ""
 fi
 
 # Change user password
@@ -107,7 +108,8 @@ check_status "Package update"
 echo -e "${GREEN}Package repositories and packages updated successfully.${NC}"
 
 # Prompt for and install Linuxbrew
-if get_yes_no_response "${YELLOW}Do you want to install Linuxbrew?${NC}"; then
+echo -e "\n${YELLOW}Do you want to install Linuxbrew?${NC}"
+if get_yes_no_response; then
   echo "Installing Linuxbrew..."
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   check_status "Linuxbrew installation"
@@ -126,7 +128,8 @@ else
 fi
 
 # Prompt for a release upgrade
-if get_yes_no_response "${YELLOW}Do you want to upgrade to the latest Ubuntu LTS release?${NC}"; then
+echo -e "\n${YELLOW}Do you want to upgrade to the latest Ubuntu LTS release?${NC}"
+if get_yes_no_response; then
   echo -e "\n${GREEN}Checking and installing required dependencies for release upgrade...${NC}"
   sudo apt install -y update-manager-core
   check_status "Dependency installation for release upgrade"
