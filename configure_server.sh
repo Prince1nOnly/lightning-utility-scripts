@@ -170,15 +170,9 @@ sudo apt install -y build-essential make apt-transport-https ca-certificates cur
 check_status "Essential package installation"
 echo -e "${GREEN}Essential packages installed successfully.${NC}"
 
-# Switch to zsh if not already in zsh and source .zshrc
-if [ "$SHELL" != "zsh" ]; then
-  echo -e "\n${GREEN}Switching to zsh and sourcing .zshrc...${NC}"
-  zsh -c "source ~/.zshrc"
-  check_status "Switching to zsh and sourcing .zshrc"
-else
-  echo -e "\n${GREEN}Sourcing .zshrc to apply changes...${NC}"
-  source ~/.zshrc
-  check_status "Sourcing .zshrc"
-fi
+# Source .zshrc to apply changes
+echo -e "\n${GREEN}Sourcing .zshrc to apply changes...${NC}"
+zsh -c "source ~/.zshrc"
+check_status "Sourcing .zshrc"
 
 echo -e "\n${GREEN}Server configuration completed successfully.${NC}"
