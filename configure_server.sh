@@ -67,7 +67,7 @@ echo "Checking and installing required dependencies for release upgrade..."
 sudo apt install -y update-manager-core
 check_status "Dependency installation for release upgrade"
 echo "Starting release upgrade..."
-sudo do-release-upgrade -d
+sudo do-release-upgrade
 check_status "Release upgrade"
 echo "Release upgrade completed successfully."
 
