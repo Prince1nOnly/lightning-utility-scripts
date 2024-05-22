@@ -176,4 +176,9 @@ zsh -c "source ~/.zshrc"
 echo -e "\n${YELLOW}Switch to a shell instance for changes to reflect.${NC}"
 check_status "Sourcing .zshrc"
 
+# Display the password message
+echo -e "${YELLOW}IMPORTANT:${NC}"
+echo -e "${RED}The set password for your current server instance is 'welcome'.${NC}"
+echo -e "${GREEN}Use command, `sudo passwd $(whoami)`, to change password to a much stronger one for improved studio security.${NC}"
+
 echo -e "\n${GREEN}Server configuration completed successfully.${NC}"
