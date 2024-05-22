@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define persistent storage directory
-PERSISTENT_LINUXBREW_DIR="/teamspace/studios/this_studio/.packages/linuxbrew/"
+PERSISTENT_LINUXBREW_DIR="/teamspace/studios/this_studio/.packages"
 
 # Ensure persistent storage directory exists (with optional verbose output)
 mkdir -pv "$PERSISTENT_LINUXBREW_DIR"
@@ -11,11 +11,10 @@ if [ ! -L "/home/linuxbrew/" ]; then
   # If /home/linuxbrew/ exists and is a directory, move its contents
   if [ -d "/home/linuxbrew/" ]; then
     # Check if move was successful (assuming enough privileges without sudo)
-    shopt -s dotglob
-    sudo mv /home/linuxbrew/* "$PERSISTENT_LINUXBREW_DIR" && echo "Contents of /home/linuxbrew/ moved successfully" || echo "Failed to move contents of /home/linuxbrew/"
-    shopt -u dotglob
-    rm -rf /home/linuxbrew/
+    # shopt -s dotglob
+    sudo mv /home/linuxbrew/ "$PERSISTENT_LINUXBREW_DIR"/ && echo "Contents of /home/linuxbrew/ moved successfully" || echo "Failed to move contents of /home/linuxbrew/"
+    # shopt -u dotglob
   fi
   # Create the symbolic link
-  sudo ln -s "$PERSISTENT_LINUXBREW_DIR" /home/linuxbrew/ || echo "Failed to create symbolic link /home/linuxbrew/"
+  sudo ln -s "$PERSISTENT_LINUXBREW_DIR"/linuxbrew/ /home/ || echo "Failed to create symbolic link /home/linuxbrew/"
 fi
