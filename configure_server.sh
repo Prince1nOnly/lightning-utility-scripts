@@ -8,6 +8,11 @@ check_status() {
   fi
 }
 
+# Make all scripts in the current directory executable
+echo "Setting executable permissions for all scripts in the current directory..."
+chmod +x ./*.sh
+check_status "Setting executable permissions"
+
 # Display the task description to the user
 echo "This script will configure your Ubuntu Docker instance by performing the following tasks:"
 echo "1. Change the user password."
