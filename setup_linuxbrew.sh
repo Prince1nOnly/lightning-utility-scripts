@@ -12,7 +12,7 @@ if [ ! -L "/home/linuxbrew/" ]; then
   if [ -d "/home/linuxbrew/" ]; then
     # Check if move was successful (assuming enough privileges without sudo)
     # shopt -s dotglob
-    sudo mv /home/linuxbrew/ "$PERSISTENT_LINUXBREW_DIR"/ && echo "Contents of /home/linuxbrew/ moved successfully" || echo "Failed to move contents of /home/linuxbrew/"
+    sudo mv /home/linuxbrew/ "$PERSISTENT_LINUXBREW_DIR"/ && echo "/home/linuxbrew/ moved successfully" || echo "Failed to move contents of /home/linuxbrew/"
     # shopt -u dotglob
   fi
   # Create the symbolic link
