@@ -3,8 +3,6 @@ if [ -f /teamspace/studios/this_studio/setup_linuxbrew.sh ]; then
     source /teamspace/studios/this_studio/lightning-utility-scripts/setup_linuxbrew.sh
 fi
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 # Ensure password
 # Restore password state on shell startup
 if [ -f /teamspace/studios/this_studio/lightning-utility-scripts/restore_password.sh ]; then
