@@ -10,7 +10,10 @@ mkdir -p "$PERSISTENT_LINUXBREW_DIR"
 if [ ! -L "/home/linuxbrew" ]; then
     # If /home/linuxbrew exists and is a directory, move its contents
     if [ -d "/home/linuxbrew" ]; then
-        sudo mv /home/linuxbrew/* "$PERSISTENT_LINUXBREW_DIR"/
+        # Loop through files in /home/linuxbrew and move them individually
+        for file in /home/linuxbrew/*; do
+            sudo mv "$file" "$PERSISTENT_LINUXBREW_DIR"
+        done
     fi
     # Create the symbolic link
     sudo ln -s "$PERSISTENT_LINUXBREW_DIR" /home/linuxbrew
