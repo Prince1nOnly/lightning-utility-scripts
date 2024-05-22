@@ -144,7 +144,7 @@ fi
 # Append sourcing of "implement.sh" to .profile
 if ! grep -q "source ~/lightning-utility-scripts/implement.sh" ~/.profile; then
   echo -e "\n${GREEN}Appending command to source 'implement.sh' to .profile...${NC}"
-  echo "source ~/lightning-utility-scripts/implement.sh" >> ~/.profile
+  echo -e "\nsource ~/lightning-utility-scripts/implement.sh\n" >> ~/.profile
 fi
 
 # Automatically configure Linuxbrew in the profile if installed
@@ -160,7 +160,7 @@ fi
 # Append sourcing of .profile to .zshrc
 if ! grep -q "source ~/.profile" ~/.zshrc; then
   echo -e "\n${GREEN}Appending command to source .profile to .zshrc...${NC}"
-  echo "source ~/.profile" >> ~/.zshrc
+  echo -e "\nsource ~/.profile\n" >> ~/.zshrc
 fi
 
 # Install essential packages
@@ -171,7 +171,7 @@ check_status "Essential package installation"
 echo -e "${GREEN}Essential packages installed successfully.${NC}"
 
 # Switch to zsh if not already in zsh and source .zshrc
-if [ "$SHELL" != "/bin/zsh" ]; then
+if [ "$SHELL" != "zsh" ]; then
   echo -e "\n${GREEN}Switching to zsh and sourcing .zshrc...${NC}"
   zsh -c "source ~/.zshrc"
   check_status "Switching to zsh and sourcing .zshrc"
