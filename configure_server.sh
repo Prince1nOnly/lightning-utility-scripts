@@ -108,17 +108,8 @@ echo -e "${GREEN}Package repositories and packages updated successfully.${NC}"
 
 # Prompt for and install Linuxbrew
 if get_yes_no_response "${YELLOW}Do you want to install Linuxbrew?${NC}"; then
-  echo -e "\n${GREEN}Installing Linuxbrew...${NC}"
-  sudo apt-get install -y expect
-  expect -c "
-  set timeout 5  # Increase the timeout value to give more time for the prompt
-  set spawn_id $spawn_id
-  spawn /bin/bash -c \"/usr/bin/curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | /bin/bash\"
-  expect \"Checking for 'sudo' access (which may request your password)...\"
-  expect -re ".*\[sudo\] password for.*: "  # Match the actual password prompt pattern
-  send -- \"welcome\r\"
-  expect eof
-  "
+  echo "Installing Linuxbrew..."
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   check_status "Linuxbrew installation"
   echo -e "${GREEN}Linuxbrew installed successfully.${NC}"
   if [ -f ./setup_linuxbrew.sh ]; then
