@@ -91,7 +91,7 @@ backup_password
 
 # Update package repositories and packages
 echo "Updating package repositories and packages..."
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt full-upgrade -y
 check_status "Package update"
 echo "Package repositories and packages updated successfully."
 
@@ -145,7 +145,8 @@ fi
 
 # Install essential packages
 echo "Installing essential packages..."
-sudo apt install -y build-essential make apt-transport-https ca-certificates curl gnupg-agent software-properties-common net-tools iputils-ping git zip nano lsof iptables jq
+sudo apt update && sudo apt full-upgrade -y
+sudo apt install -y build-essential make apt-transport-https ca-certificates curl gnupg-agent software-properties-common net-tools iputils-ping git zip nano lsof iptables jq nodejs npm
 check_status "Essential package installation"
 echo "Essential packages installed successfully."
 
