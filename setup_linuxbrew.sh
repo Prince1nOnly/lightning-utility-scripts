@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define persistent storage directory
-PERSISTENT_LINUXBREW_DIR="/teamspace/studios/this_studio/packages/linuxbrew"
+PERSISTENT_LINUXBREW_DIR="/teamspace/studios/this_studio/.packages/linuxbrew"
 
 # Ensure persistent storage directory exists
 mkdir -p "$PERSISTENT_LINUXBREW_DIR"
