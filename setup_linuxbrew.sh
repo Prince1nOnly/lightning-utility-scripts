@@ -16,5 +16,5 @@ if [ ! -L "/home/linuxbrew/" ]; then
     shopt -u dotglob
   fi
   # Create the symbolic link
-  ln -s "$PERSISTENT_LINUXBREW_DIR" /home/linuxbrew/ || echo "Failed to create symbolic link /home/linuxbrew/"
+  sudo ln -s "$PERSISTENT_LINUXBREW_DIR" /home/linuxbrew/ || echo "Failed to create symbolic link /home/linuxbrew/"
 fi
