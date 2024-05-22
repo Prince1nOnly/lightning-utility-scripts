@@ -111,12 +111,13 @@ if get_yes_no_response "${YELLOW}Do you want to install Linuxbrew?${NC}"; then
   echo -e "\n${GREEN}Installing Linuxbrew...${NC}"
   sudo apt-get install -y expect
   expect -c "
-  set timeout -1
-  spawn /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"
-  expect \"Checking for \`sudo\` access (which may request your password)...\"
-  expect \"\\[sudo\\] password for \[^\]*:\"
-  send \"welcome\r\"
-  expect eof
+    set timeout -1
+    spawn /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"
+    expect \"Checking for \`sudo\` access (which may request your password)...\"
+    expect \"\\[sudo\\] password for \[^\]*:\"
+    send \"welcome\r\"
+    expect \"Linuxbrew installed successfully.\"
+    expect eof
   "
   check_status "Linuxbrew installation"
   echo -e "${GREEN}Linuxbrew installed successfully.${NC}"
