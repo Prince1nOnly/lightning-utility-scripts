@@ -8,6 +8,26 @@ check_status() {
   fi
 }
 
+# Function to backup password
+backup_password() {
+  # Define the backup directory and file path
+  BACKUP_DIR="/teamspace/studios/this_studio/.config/user_creds"
+  BACKUP_FILE="$BACKUP_DIR/shadow"
+
+  # Check if the backup directory exists, if not, create it
+  if [ ! -d "$BACKUP_DIR" ]; then
+    echo "Backup directory does not exist. Creating..."
+    mkdir -p "$BACKUP_DIR"
+    check_status "Creating backup directory"
+  fi
+
+  # Backup the password
+  echo "Backing up password to storage..."
+  cp /etc/shadow "$BACKUP_FILE"
+  check_status "Password backup"
+  echo "Password successfully backed up."
+}
+
 # Make all scripts in the current directory executable
 echo "Setting executable permissions for all scripts in the current directory..."
 chmod +x ./*.sh
@@ -32,10 +52,9 @@ echo "Changing user password..."
 echo "$(whoami):welcome" | sudo chpasswd
 check_status "Password change"
 echo "Password changed successfully. New password is 'welcome'."
-echo "Backing up password to storage..."
-source ./save_password.sh
-check_status "Password backup"
-echo "Password successfully backed up."
+
+# Backup password
+backup_password
 
 # Update package repositories and packages
 echo "Updating package repositories and packages..."
