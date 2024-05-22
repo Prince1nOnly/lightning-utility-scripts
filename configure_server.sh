@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Variable to hold the "yes to all" flag
+YES_TO_ALL=false
+
 # Function to check the status of the last command and exit if it failed
 check_status() {
   if [ $? -ne 0 ]; then
@@ -28,6 +31,34 @@ backup_password() {
   echo "Password successfully backed up."
 }
 
+# Function to get normalized yes/no response from the user
+get_yes_no_response() {
+  if $YES_TO_ALL; then
+    return 0
+  fi
+  while true; do
+    read -p "$1 (yes/no): " response
+    case "$response" in
+      [yY][eE][sS]|[yY]) return 0 ;;
+      [nN][oO]|[nN]) return 1 ;;
+      *) echo "Invalid response. Please enter 'yes[Y/y]' or 'no[N/n]'." ;;
+    esac
+  done
+}
+
+# Parse arguments
+while getopts ":y" opt; do
+  case ${opt} in
+    y )
+      YES_TO_ALL=true
+      ;;
+    \? )
+      echo "Invalid option: -$OPTARG" 1>&2
+      exit 1
+      ;;
+  esac
+done
+
 # Make all scripts in the current directory executable
 echo "Setting executable permissions for all scripts in the current directory..."
 chmod +x ./*.sh
@@ -44,8 +75,10 @@ echo "6. Append sourcing of .profile to .zshrc."
 echo "7. Configure Linuxbrew in the profile."
 echo "8. Install essential packages."
 
-# Wait for the user to be ready
-read -p "Press Enter to start the configuration process..."
+# Wait for the user to be ready if not using -y
+if ! $YES_TO_ALL; then
+  read -p "Press Enter to start the configuration process..."
+fi
 
 # Change user password
 echo "Changing user password..."
@@ -63,13 +96,12 @@ check_status "Package update"
 echo "Package repositories and packages updated successfully."
 
 # Prompt for a release upgrade
-read -p "Do you want to upgrade to the latest Ubuntu LTS release? (yes/no): " upgrade_ubuntu
-if [[ $upgrade_ubuntu == "yes" ]]; then
+if get_yes_no_response "Do you want to upgrade to the latest Ubuntu LTS release?"; then
   echo "Checking and installing required dependencies for release upgrade..."
   sudo apt install -y update-manager-core
   check_status "Dependency installation for release upgrade"
   echo "Starting release upgrade..."
-  sudo do-release-upgrade
+  sudo do-release-upgrade -f DistUpgradeViewNonInteractive
   check_status "Release upgrade"
   echo "Release upgrade completed successfully."
 else
@@ -77,8 +109,7 @@ else
 fi
 
 # Prompt for and install Linuxbrew
-read -p "Do you want to install Linuxbrew? (yes/no): " install_brew
-if [[ $install_brew == "yes" ]]; then
+if get_yes_no_response "Do you want to install Linuxbrew?"; then
   echo "Installing Linuxbrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   check_status "Linuxbrew installation"
@@ -91,19 +122,25 @@ else
 fi
 
 # Append sourcing of "implement.sh" to .profile
-echo "Appending command to source 'implement.sh' to .profile..."
-echo "source ~/lightning-utility-scripts/implement.sh" >> ~/.profile
+if ! grep -q "source ~/lightning-utility-scripts/implement.sh" ~/.profile; then
+  echo "Appending command to source 'implement.sh' to .profile..."
+  echo "source ~/lightning-utility-scripts/implement.sh" >> ~/.profile
+fi
 
 # Append sourcing of .profile to .zshrc
-echo "Appending command to source .profile to .zshrc..."
-echo "source ~/.profile" >> ~/.zshrc
+if ! grep -q "source ~/.profile" ~/.zshrc; then
+  echo "Appending command to source .profile to .zshrc..."
+  echo "source ~/.profile" >> ~/.zshrc
+fi
 
 # Configure Linuxbrew in the profile
-if [[ $install_brew == "yes" ]]; then
-  echo "Configuring Linuxbrew in the profile..."
-  echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  check_status "Linuxbrew configuration in profile"
+if get_yes_no_response "Do you want to configure Linuxbrew in the profile?"; then
+  if ! grep -q 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' ~/.profile; then
+    echo "Configuring Linuxbrew in the profile..."
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    check_status "Linuxbrew configuration in profile"
+  fi
 fi
 
 # Install essential packages
