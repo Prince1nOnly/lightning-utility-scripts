@@ -48,7 +48,7 @@ get_yes_no_response() {
     return 0
   fi
   while true; do
-    read -p "$1 (yes[Y/y] or no[N/n]): " response
+    read -p "$1(Yes[Y/y] or No[N/n]): " response
     case "$response" in
       [yY][eE][sS]|[yY]) return 0 ;;
       [nN][oO]|[nN]) return 1 ;;
