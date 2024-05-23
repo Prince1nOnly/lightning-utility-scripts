@@ -19,18 +19,15 @@ check_status() {
 
 # Function to backup password
 backup_password() {
-  # Define the backup directory and file path
-  BACKUP_DIR="/teamspace/studios/this_studio/.config/user_creds"
-  BACKUP_FILE="$BACKUP_DIR/shadow"
+  local BACKUP_DIR="/teamspace/studios/this_studio/.config/user_creds"
+  local BACKUP_FILE="$BACKUP_DIR/shadow"
 
-  # Check if the backup directory exists, if not, create it
   if [ ! -d "$BACKUP_DIR" ]; then
     echo -e "\n${YELLOW}Backup directory does not exist. Creating...${NC}"
     mkdir -p "$BACKUP_DIR"
     check_status "Creating backup directory"
   fi
 
-  # Backup the password
   echo -e "\n${GREEN}Backing up password to storage...${NC}"
   if [ -f ./save_password.sh ]; then
     source ./save_password.sh
@@ -48,7 +45,7 @@ get_yes_no_response() {
     return 0
   fi
   while true; do
-    read -p "$1(Yes[Y/y] or No[N/n]): " response
+    read -p "$1 (Yes[Y/y] or No[N/n]): " response
     case "$response" in
       [yY][eE][sS]|[yY]) return 0 ;;
       [nN][oO]|[nN]) return 1 ;;
@@ -77,19 +74,22 @@ check_status "Setting executable permissions"
 
 # Display the task description to the user
 echo -e "\n${GREEN}This script will configure your Ubuntu Docker instance by performing the following tasks:${NC}"
-echo "1. Change the user password."
-echo "2. Update package repositories and packages."
-echo "3. Prompt for and install Linuxbrew if desired."
-echo "4. Prompt for a release upgrade of the current Ubuntu version."
-echo "5. Append sourcing of 'implement.sh' to .profile."
-echo "6. Append sourcing of .profile to .zshrc."
-echo "7. Automatically configure Linuxbrew in the profile if installed."
-echo "8. Install essential packages."
+cat <<EOF
+1. Change the user password.
+2. Update package repositories and packages.
+3. Prompt for and install Linuxbrew if desired.
+4. Prompt for a release upgrade of the current Ubuntu version.
+5. Append sourcing of 'implement.sh' to .profile.
+6. Append sourcing of .profile to .zshrc.
+7. Automatically configure Linuxbrew in the profile if installed.
+8. Install essential packages.
+EOF
 
 # Wait for the user to be ready if not using -y
 if ! $YES_TO_ALL; then
   echo -e "\n${YELLOW}Press any key to start the configuration process...${NC}"
   read -rsn 1 -p ""
+  echo
 fi
 
 # Change user password
@@ -110,7 +110,7 @@ echo -e "${GREEN}Package repositories and packages updated successfully.${NC}"
 # Prompt for and install Linuxbrew
 if ! $YES_TO_ALL; then echo -e "\n${YELLOW}Do you want to install Linuxbrew?${NC}"; fi
 if get_yes_no_response; then
-  echo "Installing Linuxbrew..."
+  echo -e "\n${GREEN}Installing Linuxbrew...${NC}"
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   check_status "Linuxbrew installation"
   echo -e "${GREEN}Linuxbrew installed successfully.${NC}"
@@ -179,6 +179,6 @@ check_status "Sourcing .zshrc"
 # Display the password message
 echo -e "\n${YELLOW}IMPORTANT:${NC}"
 echo -e "${RED}The set password for your current studio instance is 'welcome'.${NC}"
-echo -e "${GREEN}Use the command, 'sudo passwd $(whoami)', to change password to a much stronger one for improved studio security.${NC}"
+echo -e "${GREEN}Use the command, 'sudo passwd $(whoami)', to change the password to a stronger one for improved studio security.${NC}"
 
 echo -e "\n${GREEN}Server configuration completed successfully.${NC}"
