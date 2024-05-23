@@ -14,11 +14,17 @@ for kernel_dir in $kernels; do
         kernel_name=$(basename "$kernel_dir")
         target_path="$TARGET_DIR/$kernel_name"
         
+        # Move the kernel if it does not already exist in the target directory
         if [[ -d "$target_path" ]]; then
             echo "Kernel $kernel_name already exists in the target directory. Skipping move."
         else
             echo "Moving kernel $kernel_name from $kernel_dir to $TARGET_DIR"
             mv "$kernel_dir" "$TARGET_DIR"
+            if [[ $? -ne 0 ]]; then
+                echo "Failed to move kernel $kernel_name. Please check permissions and try again."
+            else
+                echo "Kernel $kernel_name moved successfully."
+            fi
         fi
     fi
 done
