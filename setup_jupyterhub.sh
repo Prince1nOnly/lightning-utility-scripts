@@ -24,7 +24,17 @@ conda install -y r-base kotlin-jupyter-kernel r-essentials xeus-sql xeus-cling o
 
 # Fix Kotlin kernel specification location
 echo -e "${YELLOW}Fixing Kotlin kernel specification location...${NC}"
-python -m kotlin_kernel fix-kernelspec-location
+#!/bin/bash
+
+# Define the directory path
+src_dir="/teams/space/studios/this_studio/.local/share/jupyter/kernels/kotlin/"
+# Check if the directory does not exist
+if [ ! -d "$src_dir" ]; then
+  # Run the command if the directory is not found
+  python -m kotlin_kernel fix-kernelspec-location
+else
+  echo "Kotlin kernel exists. No action needed."
+fi
 
 # Install Bash kernel
 echo -e "${YELLOW}Installing Bash kernel...${NC}"
