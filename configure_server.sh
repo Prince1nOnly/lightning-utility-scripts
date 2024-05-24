@@ -171,7 +171,7 @@ fi
 # Append sourcing of .profile to .zshrc
 if ! grep -q "source ~/.profile" ~/.zshrc; then
   echo -e "\n${GREEN}Appending command to source .profile to .zshrc...${NC}"
-  echo -e "\nsource ~/.profile\n" >> ~/.bashrc
+  echo -e "\nsource ~/.profile\n" >> ~/.zshrc
 fi
 
 # Install essential packages
@@ -183,7 +183,7 @@ echo -e "${GREEN}Essential packages installed successfully.${NC}"
 
 # Source .zshrc to apply changes
 echo -e "\n${GREEN}Sourcing .zshrc to apply changes...${NC}"
-source ~/.bashhrc
+zsh -c "source ~/.zshrc"
 echo -e "\n${YELLOW}Switch to a new shell instance for changes to reflect.${NC}"
 check_status "Sourcing .zshrc"
 
