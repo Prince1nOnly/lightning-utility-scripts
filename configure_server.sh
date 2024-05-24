@@ -183,7 +183,7 @@ echo -e "${GREEN}Essential packages installed successfully.${NC}"
 
 # Source .zshrc to apply changes
 echo -e "\n${GREEN}Sourcing .zshrc to apply changes...${NC}"
-zsh -c "source ~/.zshrc"
+source ~/.bashhrc
 echo -e "\n${YELLOW}Switch to a new shell instance for changes to reflect.${NC}"
 check_status "Sourcing .zshrc"
 
