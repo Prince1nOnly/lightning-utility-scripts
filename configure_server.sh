@@ -78,11 +78,10 @@ cat <<EOF
 1. Change the user password.
 2. Update package repositories and packages.
 3. Prompt for and install Linuxbrew if desired.
-4. Prompt for a release upgrade of the current Ubuntu version.
-5. Append sourcing of 'implement.sh' to .profile.
-6. Append sourcing of .profile to .zshrc.
-7. Automatically configure Linuxbrew in the profile if installed.
-8. Install essential packages.
+4. Append sourcing of 'implement.sh' to .profile.
+5. Append sourcing of .profile to .zshrc.
+6. Automatically configure Linuxbrew in the profile if installed.
+7. Install essential packages.
 EOF
 
 # Wait for the user to be ready if not using -y
