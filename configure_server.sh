@@ -127,6 +127,20 @@ else
   echo -e "${YELLOW}Skipping Linuxbrew installation.${NC}"
 fi
 
+# Prompt for a release upgrade
+#if ! $YES_TO_ALL; then echo -e "\n${YELLOW}Do you want to upgrade to the latest Ubuntu LTS release?${NC}"; fi
+#if get_yes_no_response; then
+#  echo -e "\n${GREEN}Checking and installing required dependencies for release upgrade...${NC}"
+#  sudo apt install -y update-manager-core
+#  check_status "Dependency installation for release upgrade"
+#  echo -e "${GREEN}Starting release upgrade...${NC}"
+#  sudo do-release-upgrade -f DistUpgradeViewNonInteractive
+#  check_status "Release upgrade"
+#  echo -e "${GREEN}Release upgrade completed successfully.${NC}"
+#else
+#  echo -e "${YELLOW}Skipping Ubuntu release upgrade.${NC}"
+#fi
+
 # Append sourcing of "implement.sh" to .profile
 if ! grep -q "source ~/lightning-utility-scripts/implement.sh" ~/.profile; then
   echo -e "\n${GREEN}Appending command to source 'implement.sh' to .profile...${NC}"
