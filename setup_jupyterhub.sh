@@ -11,21 +11,16 @@ NC='\033[0m' # No Color
 
 echo -e "${GREEN}Starting JupyterHub setup...${NC}"
 
-# Add conda channels
-echo -e "${YELLOW}Configuring conda channels...${NC}"
-conda config --add channels conda-forge
-conda config --add channels jetbrains
-conda config --add channels r
-
-# Update conda packages
-echo -e "${YELLOW}Updating all conda packages...${NC}"
+# Update conda and add channels
+echo -e "${YELLOW}Updating conda and configuring channels...${NC}"
 conda update --all -y
+conda config --add channels conda-forge jetbrains r
 
 # Install conda packages
 echo -e "${YELLOW}Installing conda packages...${NC}"
 conda install -y r-base kotlin-jupyter-kernel r-essentials xeus-sql xeus-cling octave_kernel bash_kernel deno jupyterhub ipykernel ipywidgets ipympl voila nbdime python-lsp-server jedi-language-server jupyterlab-git jupyter-resource-usage
 
-# Fix the Kotlin kernel specification location
+# Fix Kotlin kernel specification location
 echo -e "${YELLOW}Fixing Kotlin kernel specification location...${NC}"
 python -m kotlin_kernel fix-kernelspec-location
 
@@ -33,7 +28,7 @@ python -m kotlin_kernel fix-kernelspec-location
 echo -e "${YELLOW}Installing Bash kernel...${NC}"
 python -m bash_kernel.install
 
-# Install the Deno kernel
+# Install Deno kernel
 echo -e "${YELLOW}Installing Deno kernel...${NC}"
 deno jupyter --install
 
@@ -46,33 +41,26 @@ echo -e "${YELLOW}Installing Jupyter Java kernel using jbang...${NC}"
 jbang install-kernel@jupyter-java
 
 # Install Octave
-echo -e "${YELLOW}Updating package lists and installing Octave...${NC}"
-sudo apt update
-sudo apt install -y octave
+echo -e "${YELLOW}Installing Octave...${NC}"
+sudo apt-get update && sudo apt-get install -y octave
 
 # Install IJavascript and set up the kernel
 echo -e "${YELLOW}Installing IJavascript and setting up the kernel...${NC}"
-npm install -g ijavascript
-ijsinstall
+npm install -g ijavascript && ijsinstall
 
-# Install the C kernel
+# Install C kernel
 echo -e "${YELLOW}Installing C kernel...${NC}"
-pip install jupyter-c-kernel
-sudo $(which install_c_kernel)
+pip install jupyter-c-kernel && sudo $(which install_c_kernel)
 
-# Install Rust and the evcxr Jupyter kernel
+# Install Rust and evcxr Jupyter kernel
 echo -e "${YELLOW}Installing Rust and evcxr Jupyter kernel...${NC}"
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-source $HOME/.cargo/env
-cargo install evcxr_jupyter
-evcxr_jupyter --install
+source "$HOME/.cargo/env"
+cargo install evcxr_jupyter && evcxr_jupyter --install
 
 # Install PowerShell and PowerShell kernel
-echo -e "${YELLOW}Installing PowerShell...${NC}"
+echo -e "${YELLOW}Installing PowerShell and PowerShell kernel...${NC}"
 ./powershell.sh
-# sudo ln -s ~/powershell/pwsh /usr/bin/pwsh
-echo -e "${YELLOW}Installing PowerShell kernel...${NC}"
-pip install powershell_kernel
-python -m powershell_kernel.install
+pip install powershell_kernel && python -m powershell_kernel.install
 
 echo -e "${GREEN}JupyterHub setup is complete.${NC}"
