@@ -46,7 +46,7 @@ change_user_password() {
   if [ $? -eq 0 ]; then
     echo -e "${GREEN}Password changed successfully.${NC}"
   else
-    echo -e "${RED}Password change failed.${NC}"
+    echo -e "${RED}Password change failed. You can manually change it later.${NC}"
     exit 1
   fi
 }
