@@ -58,7 +58,7 @@ ijsinstall
 # Install the C kernel
 echo -e "${YELLOW}Installing C kernel...${NC}"
 pip install jupyter-c-kernel
-install_c_kernel
+sudo $(which install_c_kernel)
 
 # Install Rust and the evcxr Jupyter kernel
 echo -e "${YELLOW}Installing Rust and evcxr Jupyter kernel...${NC}"
