@@ -39,6 +39,18 @@ backup_password() {
   fi
 }
 
+# Function to change user password
+change_user_password() {
+  echo -e "\n${GREEN}Changing user password...${NC}"
+  sudo passwd $(whoami)
+  if [ $? -eq 0 ]; then
+    echo -e "${GREEN}Password changed successfully.${NC}"
+  else
+    echo -e "${RED}Password change failed.${NC}"
+    exit 1
+  fi
+}
+
 # Function to get normalized yes/no response from the user
 get_yes_no_response() {
   if $YES_TO_ALL; then
@@ -179,5 +191,15 @@ check_status "Sourcing .zshrc"
 echo -e "\n${YELLOW}IMPORTANT:${NC}"
 echo -e "${RED}The set password for your current studio instance is 'welcome'.${NC}"
 echo -e "${GREEN}Use the command, 'sudo passwd $(whoami)', to change the password to a stronger one for improved studio security.${NC}"
+
+# Prompt user to change password
+if ! $YES_TO_ALL; then
+  echo -e "\n${YELLOW}Would you like to change your password now?${NC}"
+  if get_yes_no_response; then
+    change_user_password
+  else
+    echo -e "${YELLOW}Skipping password change.${NC}"
+  fi
+fi
 
 echo -e "\n${GREEN}Server configuration completed successfully.${NC}"
