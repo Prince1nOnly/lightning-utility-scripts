@@ -15,7 +15,7 @@ echo -e "${GREEN}Starting JupyterHub setup...${NC}"
 echo -e "${YELLOW}Updating conda and configuring channels...${NC}"
 conda config --add channels conda-forge
 conda config --add channels jetbrains
-conda config --add channelsr
+conda config --add channels r
 conda update --all -y
 
 # Install conda packages
