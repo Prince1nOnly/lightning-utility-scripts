@@ -23,7 +23,7 @@ conda update --all -y
 
 # Install conda packages
 echo -e "${YELLOW}Installing conda packages...${NC}"
-conda install -y r-base kotlin-jupyter-kernel r-essentials xeus-sql xeus-cling xeus-octave bash_kernel deno jupyterhub ipykernel ipywidgets ipympl voila nbdime python-lsp-server jedi-language-server jupyterlab-git jupyter-resource-usage jupyterlab-drawio
+conda install -y r-base kotlin-jupyter-kernel r-essentials xeus-sql xeus-cling xeus-octave bash_kernel deno jupyterhub ipykernel ipywidgets ipympl voila nbdime python-lsp-server jedi-language-server jupyterlab-git jupyter-resource-usage
 
 # Fix the Kotlin kernel specification location
 echo -e "${YELLOW}Fixing Kotlin kernel specification location...${NC}"
