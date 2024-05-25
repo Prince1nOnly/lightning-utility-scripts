@@ -181,11 +181,10 @@ sudo apt install -y build-essential make apt-transport-https ca-certificates cur
 check_status "Essential package installation"
 echo -e "${GREEN}Essential packages installed successfully.${NC}"
 
-# Source .zshrc to apply changes
-echo -e "\n${GREEN}Sourcing .zshrc to apply changes...${NC}"
-zsh -c "source ~/.zshrc"
-echo -e "\n${YELLOW}Switch to a new shell instance for changes to reflect.${NC}"
-check_status "Sourcing .zshrc"
+# Source .profile to apply changes
+echo -e "\n${GREEN}Sourcing .profile to apply changes...${NC}"
+source ~/.profile
+check_status "Sourcing .profile"
 
 # Display the password message
 echo -e "\n${YELLOW}IMPORTANT:${NC}"
